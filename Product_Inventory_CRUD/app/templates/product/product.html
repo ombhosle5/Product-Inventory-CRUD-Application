@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <style>
+/* Container and Page Background */
+body {
+    background-color: #f4f4f7; /* Soft smoky white */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    padding: 40px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.8); /* Translucent white */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); /* Soft smoky shadow */
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+h2 {
+    color: #2c3e50;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #fdfdfd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+    border-color: #ccc;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #888;
+    border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+    color: #e74c3c; /* Subtle red for delete */
+    background: #fff5f5;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden; /* Ensures border-radius shows */
+}
+
+thead {
+    background-color: #f8f9fa; /* Smoky header */
+    border-bottom: 2px solid #eee;
+}
+
+th {
+    text-align: left;
+    padding: 15px;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: #7f8c8d;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 15px;
+    color: #070707;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: #ebebeb; /* Very faint smoky hover */
+}
+
+/* Price Tag specific style */
+.price-tag {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Form adjustment for buttons inside table */
+form {
+    margin: 0;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Product Inventory</h2>
+    
+    <!-- Link to your create view -->
+    <a href="{% url 'create_product' %}" class="btn">Create New Product</a>
+    <a href="{% url 'product_view' %}" class="btn">User Panel</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 'products' must match the key in your views.py -->
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }} </td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.stock }} units</td>
+                <td class="price-tag">${{ product.price }}</td>
+                
+                <td>
+                    <button type="button" class=btn><a href="{% url 'update_product' product.pk %}" style="text-decoration: none; color: black;">Edit</a></button>
+            
+                    <form action="{% url 'delete_product' product.pk %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-ghost" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No products found in the database.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+
+</body>
+</html>
