@@ -113,8 +113,6 @@ Feel free to fork this project and experiment with it! Suggestions and improveme
 **Om Bhosle** 
 
 ---
-
 ⭐ If you found this helpful, consider giving it a star!
-```ILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+**Thank You**
+
